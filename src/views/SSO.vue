@@ -181,11 +181,8 @@ import {
   login,
   loginAnonymously,
 } from "@/api/registerOrLogin.js";
-import { getUserInfo } from "@/api/me.js";
 import {
   refreshAuthToken,
-  checkAuthorityAndPerm,
-  sleep,
 } from "@/util/utils.js";
 import { showToast } from "vant";
 
@@ -365,6 +362,9 @@ export default {
           theme: "round-button",
         }).then(() => {
           var SSO_backTo = Cookies.get("SSO_backTo");
+          if(SSO_backTo == null) {
+            
+          }
           window.location.href = SSO_backTo;
         });
       }
