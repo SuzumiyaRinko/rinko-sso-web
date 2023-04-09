@@ -8,7 +8,7 @@
         alt="logo"
       />
       <div class="title">
-        <span>Rinko-AssAss噢！</span>
+        <span>Rinko-SSO</span>
       </div>
     </div>
     <div class="login">
@@ -181,9 +181,7 @@ import {
   login,
   loginAnonymously,
 } from "@/api/registerOrLogin.js";
-import {
-  refreshAuthToken,
-} from "@/util/utils.js";
+import { refreshAuthToken } from "@/util/utils.js";
 import { showToast } from "vant";
 
 import Cookies from "js-cookie";
@@ -191,6 +189,10 @@ import Cookies from "js-cookie";
 export default {
   setup() {
     onMounted(async () => {
+      Cookies.remove("authToken");
+      Cookies.remove("myUserInfo");
+      Cookies.remove("SSO_backTo");
+
       var totalHeight = document.documentElement.clientHeight;
       document.querySelector(".logo").style.height = `${
         (totalHeight * 30) / 100
@@ -362,10 +364,13 @@ export default {
           theme: "round-button",
         }).then(() => {
           var SSO_backTo = Cookies.get("SSO_backTo");
-          if(SSO_backTo == null) {
-            
+          if (SSO_backTo != null) {
+            // 从其他应用过来的
+            window.location.href = SSO_backTo;
+          } else {
+            // 去Apps页面
+            router.push("/apps");
           }
-          window.location.href = SSO_backTo;
         });
       }
       loginShow.value = false;
@@ -394,7 +399,13 @@ export default {
           theme: "round-button",
         }).then(() => {
           var SSO_backTo = Cookies.get("SSO_backTo");
-          window.location.href = SSO_backTo;
+          if (SSO_backTo != null) {
+            // 从其他应用过来的
+            window.location.href = SSO_backTo;
+          } else {
+            // 去Apps页面
+            router.push("/apps");
+          }
         });
       }
       loginAnonymouslyShow.value = false;
