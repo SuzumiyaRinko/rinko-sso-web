@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 export function refreshAuthToken(authToken) {
     Cookies.set("authToken", authToken, {
         expires: new Date(new Date().getTime() + 30 * 60 * 1000), // 30mins
-        secure: true,
+        // secure: true, // http协议下不能开这个
       });
 }
 

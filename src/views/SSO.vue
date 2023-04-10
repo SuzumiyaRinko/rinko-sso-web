@@ -390,6 +390,7 @@ export default {
           return;
         }
         // 保存Token到Cookie
+        console.log("anonyLogin baseResponse.data", baseResponse.data);
         refreshAuthToken(baseResponse.data);
 
         // 跳转到SSO_backTo
